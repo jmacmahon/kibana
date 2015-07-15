@@ -3,6 +3,8 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var requestLogger = require('./lib/requestLogger');
 var auth = require('./lib/auth');
+var session = require('./lib/session');
+var oauth = require('./lib/oauth');
 var appHeaders = require('./lib/appHeaders');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -21,6 +23,8 @@ app.set('x-powered-by', false);
 
 app.use(requestLogger());
 app.use(auth());
+app.use(session);
+// app.use(oauth.access);
 app.use(appHeaders());
 app.use(favicon(path.join(config.public_folder, 'styles', 'theme', 'elk.ico')));
 
@@ -37,6 +41,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(compression());
+app.use(oauth.routes);
 app.use(express.static(config.public_folder));
 if (config.external_plugins_folder) app.use('/plugins', express.static(config.external_plugins_folder));
 

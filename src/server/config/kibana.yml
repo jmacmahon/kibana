@@ -4,8 +4,13 @@ port: 5601
 # The host to bind the server to.
 host: "0.0.0.0"
 
+# If Kibana is running behind a firewall or reverse-proxy, this is the external
+# URL from whicn you can access Kibana.  This is used to build OAuth redirect
+# URLs.
+external_url: "http://localhost:5601"
+
 # The Elasticsearch instance to use for all your queries.
-elasticsearch_url: "http://localhost:9200"
+elasticsearch_url: "http://localhost:9198"
 
 # preserve_elasticsearch_host true will send the hostname specified in `elasticsearch`. If you set it to false,
 # then the host you use to connect to *this* Kibana instance will be sent.
@@ -62,3 +67,14 @@ verify_ssl: true
 # If you would like to send the log output to a file you can set the path below.
 # This will also turn off the STDOUT log output.
 # log_file: ./kibana.log
+
+# TODO description of these
+oauth:
+  enabled: true
+  client_id: "hDPVfh3xAkJNIPtdPEd7Ao09Q6YGLHI0aL4k5DBZ"
+  client_secret: "FtpCQEOROqpBJochrbVPxMaXSy0q7s6yHFYrBFq0g9m9Go3mjiSB42ly7HVZ"
+  site: "http://0.0.0.0:4000"
+  token_path: "/oauth/token"
+  authorization_path: "/oauth/authorize"
+  api_url: "http://0.0.0.0:4000/api"
+  scope: "access:permissions"

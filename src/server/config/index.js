@@ -22,6 +22,10 @@ kibana.host = kibana.host || '0.0.0.0';
 kibana.elasticsearch_url = kibana.elasticsearch_url || 'http://localhost:9200';
 kibana.maxSockets = kibana.maxSockets || Infinity;
 kibana.log_file = kibana.log_file || null;
+kibana.external_url = kibana.external_url || 'http://' + kibana.host + ':' + kibana.port;
+
+kibana.oauth = kibana.oauth || {};
+kibana.oauth.enabled = kibana.oauth.enabled || false;
 
 kibana.request_timeout = kibana.startup_timeout == null ? 0 : kibana.request_timeout;
 kibana.ping_timeout = kibana.ping_timeout == null ? kibana.request_timeout : kibana.ping_timeout;
@@ -47,6 +51,7 @@ try {
 var config = module.exports = {
   port                    : kibana.port,
   host                    : kibana.host,
+  external_url            : kibana.external_url,
   elasticsearch           : kibana.elasticsearch_url,
   root                    : path.normalize(path.join(__dirname, '..')),
   quiet                   : false,
@@ -60,7 +65,8 @@ var config = module.exports = {
   maxSockets              : kibana.maxSockets,
   log_file                : kibana.log_file,
   request_timeout         : kibana.request_timeout,
-  ping_timeout            : kibana.ping_timeout
+  ping_timeout            : kibana.ping_timeout,
+  oauth                   : kibana.oauth
 };
 
 config.plugins = listPlugins(config);
