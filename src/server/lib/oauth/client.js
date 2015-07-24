@@ -1,5 +1,4 @@
 var logger = require('../logger');
-var config = require('../../config');
 
 var express = require('express');
 var querystring = require('querystring');
@@ -26,11 +25,9 @@ module.exports = function (options) {
       code: code,
       redirect_uri: options.externalUrl + options.baseUrl + options.callbackEndpoint
     }, function (error, result) {
-      // TODO real error handling
       if (error) {
-        logger.error('Access Token error', error.error);
-        res.status(500);
-        res.send('Access Token error.');
+        error.status = 500;
+        next(error);
         return;
       }
       var token = oauth2.accessToken.create(result);
@@ -40,6 +37,11 @@ module.exports = function (options) {
 
       res.redirect(options.redirectUrl);
     });
+  });
+
+  router.get(options.resetEndpoint, function (req, res, next) {
+    req.session.destroy();
+    res.redirect('/');
   });
 
   return {

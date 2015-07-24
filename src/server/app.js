@@ -24,7 +24,6 @@ app.set('x-powered-by', false);
 app.use(requestLogger());
 app.use(auth());
 app.use(session);
-// app.use(oauth.access);
 app.use(appHeaders());
 app.use(favicon(path.join(config.public_folder, 'styles', 'theme', 'elk.ico')));
 
@@ -35,6 +34,7 @@ if (app.get('env') === 'development') {
 // The proxy must be set up before all the other middleware.
 // TODO: WE might want to move the middleware to each of the individual routes
 // so we don't have weird conflicts in the future.
+app.use('/elasticsearch', oauth.control);
 app.use('/elasticsearch', proxy);
 
 app.use(bodyParser.json());
@@ -42,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(compression());
 app.use(oauth.routes);
+app.use(oauth.control);
 app.use(express.static(config.public_folder));
 if (config.external_plugins_folder) app.use('/plugins', express.static(config.external_plugins_folder));
 

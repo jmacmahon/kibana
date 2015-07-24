@@ -1,11 +1,11 @@
-// TODO read config options
 var options = {};
 // Module constants
 options.authEndpoint = '/auth';
 options.callbackEndpoint = '/callback';
 options.baseUrl = '/oauth';
+options.resetEndpoint = '/reset';
 options.state = 'some state';
-options.redirectUrl = '/debug/dump_session';
+options.redirectUrl = '/';
 
 var config = require('../../config');
 
@@ -20,8 +20,11 @@ options.oauth2Params = {
 };
 options.apiUrl = config.oauth.api_url;
 options.scope = config.oauth.scope;
+options.statisticsPermission = config.oauth.statistics_permission;
+options.enabled = config.oauth.enabled;
 
 var client = require('./client')(options);
+var permissions = require('./permissions')(options);
 var access = require('./access')(options);
 var express = require('express');
 
@@ -30,6 +33,6 @@ namespacedRouter.use(options.baseUrl, client.routes);
 
 module.exports = {
   routes: namespacedRouter,
-  // access: access.middleware,
-  getPermission: access.getPermission
+  control: access.control,
+  getPermission: permissions.getPermission
 };

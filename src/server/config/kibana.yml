@@ -71,10 +71,11 @@ verify_ssl: true
 # TODO description of these
 oauth:
   enabled: true
-  client_id: "hDPVfh3xAkJNIPtdPEd7Ao09Q6YGLHI0aL4k5DBZ"
-  client_secret: "FtpCQEOROqpBJochrbVPxMaXSy0q7s6yHFYrBFq0g9m9Go3mjiSB42ly7HVZ"
-  site: "http://0.0.0.0:4000"
+  client_id: "TFwhTU3G5j2ltAFFUBjDIMdSKkK24fs74pqoWSTN"
+  client_secret: "lHeu8sigUFtri7ehpZi96P2KrjhUinUH1yDbjXdxL3r96qgxNEtl2MqypvPP"
+  site: "http://localhost:4000"
   token_path: "/oauth/token"
   authorization_path: "/oauth/authorize"
-  api_url: "http://0.0.0.0:4000/api"
+  api_url: "http://localhost:4000/api"
   scope: "access:permissions"
+  statistics_permission: "viewstatistics"
