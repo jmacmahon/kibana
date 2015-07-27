@@ -10,7 +10,7 @@ options.redirectUrl = '/';
 var config = require('../../config');
 
 // Options from config
-options.externalUrl = config.external_url;
+options.externalUrl = config.oauth.external_url;
 options.oauth2Params = {
   clientID: config.oauth.client_id,
   clientSecret: config.oauth.client_secret,
@@ -20,7 +20,7 @@ options.oauth2Params = {
 };
 options.apiUrl = config.oauth.api_url;
 options.scope = config.oauth.scope;
-options.statisticsPermission = config.oauth.statistics_permission;
+options.statisticsPermission = config.oauth.statistics_permission_name;
 options.enabled = config.oauth.enabled;
 
 if (!options.enabled) {

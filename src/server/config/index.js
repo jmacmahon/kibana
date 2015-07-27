@@ -22,15 +22,16 @@ kibana.host = kibana.host || '0.0.0.0';
 kibana.elasticsearch_url = kibana.elasticsearch_url || 'http://localhost:9200';
 kibana.maxSockets = kibana.maxSockets || Infinity;
 kibana.log_file = kibana.log_file || null;
-kibana.external_url = kibana.external_url || 'http://' + kibana.host + ':' + kibana.port;
 
 kibana.oauth = kibana.oauth || {};
 kibana.oauth.enabled = kibana.oauth.enabled || false;
 kibana.oauth.scope = kibana.oauth.scope || 'access:permissions';
-kibana.oauth.statistics_permission = kibana.oauth.statistics_permission || 'viewstatistics';
+kibana.oauth.statistics_permission_name = kibana.oauth.statistics_permission_name || 'viewstatistics';
+kibana.oauth.token_path = kibana.oauth.token_path || '/oauth/token';
+kibana.oauth.authorization_path = kibana.oauth.authorization_path || '/oauth/authorize';
 
 kibana.session = kibana.session || {};
-kibana.session.redis_host = kibana.session.redis_host || '127.0.0.1';
+kibana.session.redis_host = kibana.session.redis_host || 'localhost';
 kibana.session.redis_port = kibana.session.redis_port || 6379;
 kibana.session.redis_prefix = kibana.session.redis_prefix || 'kibana4:sess:';
 
@@ -58,7 +59,6 @@ try {
 var config = module.exports = {
   port                    : kibana.port,
   host                    : kibana.host,
-  external_url            : kibana.external_url,
   elasticsearch           : kibana.elasticsearch_url,
   root                    : path.normalize(path.join(__dirname, '..')),
   quiet                   : false,

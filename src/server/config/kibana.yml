@@ -4,13 +4,8 @@ port: 5601
 # The host to bind the server to.
 host: "0.0.0.0"
 
-# If Kibana is running behind a firewall or reverse-proxy, this is the external
-# URL from whicn you can access Kibana.  This is used to build OAuth redirect
-# URLs.
-external_url: "http://localhost:5601"
-
 # The Elasticsearch instance to use for all your queries.
-elasticsearch_url: "http://localhost:9198"
+elasticsearch_url: "http://localhost:9200"
 
 # preserve_elasticsearch_host true will send the hostname specified in `elasticsearch`. If you set it to false,
 # then the host you use to connect to *this* Kibana instance will be sent.
@@ -68,23 +63,67 @@ verify_ssl: true
 # This will also turn off the STDOUT log output.
 # log_file: ./kibana.log
 
-# TODO description of these
+# These settings control the OAuth access control layer.  By default this is
+# disabled.  If you wish to enable it, you will need an OAuth provider which
+# supports the following endpoint:
+#
+# GET /permissions/{statistics_permission_name}
+#
+# This should return a JSON document of the form {"permitted": true/false}, to
+# authenticate the logged-in user against the given permission.
+#
+# To use OAuth access control, you need to set up a Redis server to store user
+# sessions (see below).
+#
+# Required values left uncommented, default values provided.
 oauth:
-  enabled: true
-  scope: "access:permissions"
-  statistics_permission: "viewstatistics"
-  # The following are all required values
-  client_id: "TFwhTU3G5j2ltAFFUBjDIMdSKkK24fs74pqoWSTN"
-  client_secret: "lHeu8sigUFtri7ehpZi96P2KrjhUinUH1yDbjXdxL3r96qgxNEtl2MqypvPP"
-  site: "http://localhost:4000"
-  token_path: "/oauth/token"
-  authorization_path: "/oauth/authorize"
-  api_url: "http://localhost:4000/api"
+  # Set to true to enable OAuth access control
+  # enabled: false
 
-# TODO expand. Currently, sessions are only used when OAuth is enabled.
+  # The OAuth scope to request access to
+  # scope: "access:permissions"
+
+  # The permission name to request to view statistics on Kibana
+  # statistics_permission_name: "viewstatistics"
+
+  # The following are all required values
+  # (Required) The client ID given to you by your OAuth provider
+  client_id: ""
+
+  # (Required) The client secret given to you by your OAuth provider
+  client_secret: ""
+
+  # (Required) The base URL of your OAuth provider
+  site: ""
+
+  # The token endpoint for your OAuth provider
+  # token_path: "/oauth/token"
+
+  # The authorization endpoint for your OAuth provider
+  # authorization_path: "/oauth/authorize"
+
+  # (Required) The base URL for the permissions API
+  api_url: ""
+
+  # (Required) If Kibana is running behind a firewall or reverse-proxy, this is
+  # the external URL from whicn you can access Kibana.  This is used to build
+  # OAuth redirect URLs.  For development purposes this will likely be
+  # "http://localhost:5601".
+  external_url: ""
+
+# These settings are for storing user sessions in Redis.  They are only used if
+# OAuth access control is enabled.
+#
+# Required values left uncommented, default values provided.
 session:
-  redis_host: "127.0.0.1"
-  redis_port: 6379
-  redis_prefix: "kibana4:sess:"
-  # Required value
-  secret: "sample-secret"
+  # The host of your Redis server.
+  # redis_host: "localhost"
+
+  # The port of your Redis server
+  # redis_port: 6379
+
+  # The prefix for storing session keys
+  # redis_prefix: "kibana4:sess:"
+
+  # (Required) A secret to encrypt session keys with
+  secret: ""
