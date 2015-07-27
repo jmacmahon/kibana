@@ -26,6 +26,13 @@ kibana.external_url = kibana.external_url || 'http://' + kibana.host + ':' + kib
 
 kibana.oauth = kibana.oauth || {};
 kibana.oauth.enabled = kibana.oauth.enabled || false;
+kibana.oauth.scope = kibana.oauth.scope || 'access:permissions';
+kibana.oauth.statistics_permission = kibana.oauth.statistics_permission || 'viewstatistics';
+
+kibana.session = kibana.session || {};
+kibana.session.redis_host = kibana.session.redis_host || '127.0.0.1';
+kibana.session.redis_port = kibana.session.redis_port || 6379;
+kibana.session.redis_prefix = kibana.session.redis_prefix || 'kibana4:sess:';
 
 kibana.request_timeout = kibana.startup_timeout == null ? 0 : kibana.request_timeout;
 kibana.ping_timeout = kibana.ping_timeout == null ? kibana.request_timeout : kibana.ping_timeout;
@@ -66,7 +73,8 @@ var config = module.exports = {
   log_file                : kibana.log_file,
   request_timeout         : kibana.request_timeout,
   ping_timeout            : kibana.ping_timeout,
-  oauth                   : kibana.oauth
+  oauth                   : kibana.oauth,
+  session                 : kibana.session
 };
 
 config.plugins = listPlugins(config);

@@ -1,17 +1,20 @@
-// TODO config stuff
-var express = require('express');
+var options = {};
 
-var session = require('express-session')({
-  secret: 'sample-secret',
+var config = require('../config');
+
+var express = require('express');
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
+
+var configuredSession = session({
+  store: new RedisStore({
+    host: config.session.redis_host,
+    port: config.session.redis_port,
+    prefix: config.session.redis_prefix
+  }),
+  secret: config.session.secret,
   resave: false,
   saveUninitialized: false
 });
 
-var r = express.Router();
-r.use(session);
-r.get('/dump_session', function (req, res, next) {
-  res.header('Content-type', 'text/plain');
-  res.send(JSON.stringify(req.session, null, '  '));
-});
-
-module.exports = r;
+module.exports = configuredSession;

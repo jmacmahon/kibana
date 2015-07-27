@@ -71,11 +71,20 @@ verify_ssl: true
 # TODO description of these
 oauth:
   enabled: true
+  scope: "access:permissions"
+  statistics_permission: "viewstatistics"
+  # The following are all required values
   client_id: "TFwhTU3G5j2ltAFFUBjDIMdSKkK24fs74pqoWSTN"
   client_secret: "lHeu8sigUFtri7ehpZi96P2KrjhUinUH1yDbjXdxL3r96qgxNEtl2MqypvPP"
   site: "http://localhost:4000"
   token_path: "/oauth/token"
   authorization_path: "/oauth/authorize"
   api_url: "http://localhost:4000/api"
-  scope: "access:permissions"
-  statistics_permission: "viewstatistics"
+
+# TODO expand. Currently, sessions are only used when OAuth is enabled.
+session:
+  redis_host: "127.0.0.1"
+  redis_port: 6379
+  redis_prefix: "kibana4:sess:"
+  # Required value
+  secret: "sample-secret"
