@@ -40,7 +40,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(compression());
 app.use(oauth.routes);
-app.use(oauth.control);
 
 // To provide the initial login redirect
 app.get('/', oauth.control);
